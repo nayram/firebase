@@ -27,7 +27,7 @@ class Firebase {
     // sending push message to multiple users by firebase registration ids
     public function sendMultiple($registration_ids, $message) {
         $fields = array(
-            'to' => $registration_ids,
+            'registration_ids' => $registration_ids,
             'data' => $message,
         );
 
@@ -36,7 +36,7 @@ class Firebase {
 
     // function makes curl request to firebase servers
     private function sendPushNotification($fields) {
-        
+
         require_once __DIR__ . '/config.php';
 
         // Set POST variables

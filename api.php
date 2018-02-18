@@ -16,10 +16,7 @@ $message=($_GET['message']);
 $regIds=($_GET['reg_id']);
 $payload = array();
 $regTokens = explode(',', $regIds);
-if (sizeof($regTokens)==1) {
-  # code...
-  $regTokens=$regIds;
-}
+
 if (isset($_GET['meetup_id'])) {
   # code...
     $payload['meetup_id']=$_GET['meetup_id'];
@@ -38,6 +35,15 @@ $json = '';
 $response = '';
 
 $json = $push->getPush();
- $response = $firebase->sendMultiple($regTokens, $json);
-echo json_encode($response);
+if (sizeof($regTokens)>1) {
+  # code...
+  $response = $firebase->sendMultiple($regTokens, $json);
+  echo json_encode($response);
+}else{
+  $regTokens=$regIds;
+  $response = $firebase->send($regTokens, $json);
+  echo json_encode($response);
+}
+
+
  ?>
